@@ -1,7 +1,5 @@
 <p>
     <h1 align="center">Simple e-Voting System implemented with Yii2</h1>
-   
-    <br>
 </p>
 
 This is a simple evoting system build with yii2
