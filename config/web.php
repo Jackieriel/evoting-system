@@ -49,7 +49,8 @@ $config = [
                 '' => 'site/index',
                 '<action:\w+>' => 'site/<action>',
             ],
-        ],        
+        ],
+                
     ],
     'params' => $params,
 ];

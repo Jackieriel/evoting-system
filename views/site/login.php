@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     if ($session->hasFlash('successMessage')) {
         $success = $session->getFlash('successMessage');
-        echo "<div class='alert alert-primary' role='alert'>$success</div>";
+        echo "<div class='alert alert-success' role='alert'>$success</div>";
     }
     ?>
 

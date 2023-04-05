@@ -82,7 +82,6 @@ class SiteController extends Controller
         return $this->render('index', [
             'user' => $user,
         ]);
-        
     }
 
     // Registter
@@ -142,7 +141,13 @@ class SiteController extends Controller
     {
         $this->layout = '/dashb.php';
 
-        return $this->render('dashboard');
+        if (Yii::$app->user->isGuest) {
+            // User is not logged in, redirect to login page
+            return $this->redirect(['index']);
+        } else {
+            // User is logged in, show content
+            return $this->render('dashboard');
+        }
     }
 
 
