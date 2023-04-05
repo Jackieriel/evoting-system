@@ -62,7 +62,27 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(["/dashboard"]);
+        }
+
+        $request = Yii::$app->request->post();
+        $user = new User();
+        if ($request) {
+            if ($user->load($request) && $user->login()) {
+                return $this->redirect(["/dashboard"]);
+            }
+
+            $session = Yii::$app->session;
+            $session->setFlash('errorMessages', $user->getErrors());
+        }
+
+
+        $user->password = '';
+        return $this->render('index', [
+            'user' => $user,
+        ]);
+        
     }
 
     // Registter
@@ -120,6 +140,8 @@ class SiteController extends Controller
     // Dashboard
     public function actionDashboard()
     {
+        $this->layout = '/dashb.php';
+
         return $this->render('dashboard');
     }
 

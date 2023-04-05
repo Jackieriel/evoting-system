@@ -21,8 +21,28 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/custom.css',
+        'template/vendor/fontawesome-free/css/all.min.css',
+        'template/css/sb-admin-2.min.css',
+
     ];
     public $js = [
+        // Bootstrap core JavaScript
+        'template/vendor/jquery/jquery.min.js',    
+        'template/vendor/bootstrap/js/bootstrap.bundle.min.js',
+
+        // Core plugin JavaScript
+        'template/vendor/jquery-easing/jquery.easing.min.js',
+
+        // Custom scripts for all pages
+        'template/js/sb-admin-2.min.js',
+
+        // Page level plugins
+        'template/vendor/chart.js/Chart.min.js',
+
+        // Page level custom scripts
+        'template/js/demo/chart-area-demo.js',
+        'template/js/demo/chart-pie-demo.js',        
     ];
     public $depends = [
         'yii\web\YiiAsset',
