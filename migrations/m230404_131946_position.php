@@ -16,7 +16,7 @@ class m230404_131946_position extends Migration
         $this->createTable('position', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
-            'slug' => $this->string()->notNull(),
+            'slug' => $this->string()->notNull()->unique(),
             'description' => $this->text()->notNull(),
         ]);
     }

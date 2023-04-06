@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\SluggableBehavior;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "position".
@@ -23,6 +25,17 @@ class Position extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'position';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'name',
+                'ensureUnique' => true,
+            ],
+        ];
     }
 
     /**
@@ -50,6 +63,8 @@ class Position extends \yii\db\ActiveRecord
         ];
     }
 
+
+
     /**
      * Gets query for [[Candidates]].
      *
@@ -69,4 +84,5 @@ class Position extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Vote::class, ['position_id' => 'id']);
     }
+    
 }

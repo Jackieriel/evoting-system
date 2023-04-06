@@ -3,11 +3,11 @@
 namespace app\controllers;
 
 use app\models\Position;
-use yii\data\ActiveDataProvider;
+use app\models\PositionSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Cocur\Slugify\Slugify;
 
 /**
  * PositionController implements the CRUD actions for Position model.
@@ -40,22 +40,12 @@ class PositionController extends Controller
     public function actionIndex()
     {
         $this->layout = '/dashb.php';
-        
-        $dataProvider = new ActiveDataProvider([
-            'query' => Position::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+
+        $searchModel = new PositionSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -66,10 +56,14 @@ class PositionController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($slug)
     {
+        $this->layout = '/dashb.php';
+        
+        $model = Position::findOne(['slug' => $slug]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -78,30 +72,30 @@ class PositionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-
     public function actionCreate()
     {
         $model = new Position();
-        $slugify = new Slugify();
-    
+        // $slugify = new Slugify();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 // Generate slug from name input
-                $model->slug = $slugify->slugify($model->name);
-    
+                // $model->slug = $slugify->slugify($model->name);
+
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['view', 'slug' => $model->slug]);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', 'Adding Failed.');
                 }
             }
         } else {
             $model->loadDefaultValues();
         }
-    
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-    
 
     /**
      * Updates an existing Position model.

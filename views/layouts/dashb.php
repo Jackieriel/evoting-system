@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -44,19 +45,20 @@ Yii::getAlias('@web/favicon.ico')]); ?>
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= Yii::$app->urlManager->createUrl(['/dashboard']) ?>">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">eVote</div>
             </a>
 
+
             <!-- Divider -->
             <hr class="sidebar-divider my-0" />
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="dashboard">
+                <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['/dashboard']) ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -69,7 +71,7 @@ Yii::getAlias('@web/favicon.ico')]); ?>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/position/">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/position']) ?>">
                     <i class="fas fa-fw fa-user-plus"></i>
                     <span>Position</span>
                 </a>
@@ -83,21 +85,15 @@ Yii::getAlias('@web/favicon.ico')]); ?>
 
             <!-- Nav Item - Candidates Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/candidate']) ?>">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Candidates</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Add</a>
-                        <a class="collapse-item" href="utilities-border.html">Manage</a>
-                    </div>
-                </div>
+                </a>                
             </li>
 
             <!-- Nav Item - Voters Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#"">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/voter']) ?>"">
                     <i class=" fas fa-fw fa-wrench"></i>
                     <span>Voters</span>
                 </a>
@@ -217,7 +213,7 @@ Yii::getAlias('@web/favicon.ico')]); ?>
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small text-capitalize">
                                         <?= Yii::$app->user->identity->username ?>
                                     </span>
-                                    <img class="img-profile rounded-circle" src="template/img/undraw_profile.svg" />
+                                    <?php echo Html::img('@web/template/img/undraw_profile.svg', ['class' => 'img-profile rounded-circle']) ?>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

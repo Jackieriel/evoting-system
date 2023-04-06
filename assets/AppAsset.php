@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'css/custom.css',
         'template/vendor/fontawesome-free/css/all.min.css',
         'template/css/sb-admin-2.min.css',
+        'template/vendor/datatables/dataTables.bootstrap4.min.css',
 
     ];
     public $js = [
@@ -42,7 +43,16 @@ class AppAsset extends AssetBundle
 
         // Page level custom scripts
         'template/js/demo/chart-area-demo.js',
-        'template/js/demo/chart-pie-demo.js',        
+        'template/js/demo/chart-pie-demo.js',    
+        
+        // Datatable plugin
+        'template/vendor/datatables/jquery.dataTables.min.js',        
+        'template/vendor/datatables/dataTables.bootstrap4.min.js',        
+        
+        // Datatable plugin custom
+        'template/js/demo/datatables-demo.js',        
+
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
