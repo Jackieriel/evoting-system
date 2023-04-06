@@ -71,7 +71,7 @@ Yii::getAlias('@web/favicon.ico')]); ?>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/position']) ?>">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/position/index']) ?>">
                     <i class="fas fa-fw fa-user-plus"></i>
                     <span>Position</span>
                 </a>
@@ -85,15 +85,15 @@ Yii::getAlias('@web/favicon.ico')]); ?>
 
             <!-- Nav Item - Candidates Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/candidate']) ?>">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/candidate/index']) ?>">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Candidates</span>
-                </a>                
+                </a>
             </li>
 
             <!-- Nav Item - Voters Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/voter']) ?>"">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/voter/index']) ?>"">
                     <i class=" fas fa-fw fa-wrench"></i>
                     <span>Voters</span>
                 </a>
@@ -251,6 +251,8 @@ Yii::getAlias('@web/favicon.ico')]); ?>
                             Report</a>
                     </div>
 
+                    <!-- Alert -->
+                    <?= Alert::widget() ?>
                     <!-- insert main content here with row -->
                     <?= $content ?>
                 </div>

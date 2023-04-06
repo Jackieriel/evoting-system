@@ -11,6 +11,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Positions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+<!-- Begin breadcrumb -->
+<nav aria-label="breadcrumb" style="width: 80%;" class="mx-auto">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/position/index">Position</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?= $this->title ?></li>
+    </ol>
+</nav>
+
 <div class="position-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

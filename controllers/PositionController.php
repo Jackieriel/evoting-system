@@ -74,16 +74,16 @@ class PositionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Position();
-        // $slugify = new Slugify();
+        $this->layout = '/dashb.php';
+
+        $model = new Position();        
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                // Generate slug from name input
-                // $model->slug = $slugify->slugify($model->name);
+            if ($model->load($this->request->post())) {                
 
                 if ($model->save()) {
-                    return $this->redirect(['view', 'slug' => $model->slug]);
+                    Yii::$app->getSession()->setFlash('success', 'Position added successfully.');
+                    return $this->redirect('index');
                 } else {
                     Yii::$app->getSession()->setFlash('error', 'Adding Failed.');
                 }
