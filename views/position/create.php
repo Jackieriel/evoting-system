@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
@@ -11,14 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <!-- Begin breadcrumb -->
-<nav aria-label="breadcrumb" style="width: 80%;" class="mx-auto">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/position/index">Position</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><?= $this->title ?></li>
-    </ol>
-</nav>
 
-
+<?php if (!empty($this->params['breadcrumbs'])) : ?>
+    <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+<?php endif ?>
 
 
 <div class="position-create">

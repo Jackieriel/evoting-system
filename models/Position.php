@@ -47,6 +47,7 @@ class Position extends \yii\db\ActiveRecord
             [['name', 'slug', 'description'], 'required'],
             [['description'], 'string'],
             [['name', 'slug'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,6 +61,8 @@ class Position extends \yii\db\ActiveRecord
             'name' => 'Name',
             'slug' => 'Slug',
             'description' => 'Description',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 

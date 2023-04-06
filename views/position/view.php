@@ -12,36 +12,47 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <!-- Begin breadcrumb -->
-<nav aria-label="breadcrumb" style="width: 80%;" class="mx-auto">
+<nav aria-label="breadcrumb" style="width: 100%;" class="mx-auto">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/position/index">Position</a></li>
         <li class="breadcrumb-item active" aria-current="page"><?= $this->title ?></li>
     </ol>
 </nav>
 
-<div class="position-view">
+<div class="row position-view">
+    <div class="col-md-12 mx-auto">       
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p class="pt-4">
+            <?= Html::a('Update', ['update', 'slug' => $model->slug], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Delete', ['delete', 'slug' => $model->slug], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'name',
+                'slug',
+                'description:ntext',
+                [
+                    'attribute' => 'created_at',
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDatetime($model->created_at, 'MMMM d, Y h:ia');
+                    },
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDatetime($model->updated_at, 'MMMM d, Y h:ia');
+                    },
+                ]
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'slug',
-            'description:ntext',
-        ],
-    ]) ?>
+    </div>
 
 </div>

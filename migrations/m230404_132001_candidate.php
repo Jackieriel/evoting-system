@@ -18,6 +18,8 @@ class m230404_132001_candidate extends Migration
             'name' => $this->string()->notNull(),
             'photo' => $this->string()->notNull(),
             'position_id' => $this->integer()->notNull(),
+            'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
+            'updated_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
         ]);
 
         // add foreign key for candidate position

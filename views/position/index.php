@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Position</th>                            
+                            <th>Position</th> 
+                            <th>Created At</th>                           
                             <th class="text-right">Action</th>
                         </tr>
                     </thead>                    
@@ -36,9 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php foreach ($dataProvider->models as $model) : ?>
                             <tr>
                                 <td><?= $model->name ?></td>                                
+                                <td><?= Yii::$app->formatter->asDatetime($model->created_at, 'MMMM d, Y h:ia') ?></td>
                                 <td class="text-right"><?= Html::a('View', ['view', 'slug' => $model->slug], ['class' => 'btn btn-primary']) ?>
-                                    <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-                                    <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                                    <?= Html::a('Update', ['update', 'slug' => $model->slug], ['class' => 'btn btn-success']) ?>
+                                    <?= Html::a('Delete', ['delete', 'slug' => $model->slug], [
                                         'class' => 'btn btn-danger',
                                         'data' => [
                                             'confirm' => 'Are you sure you want to delete this item?',

@@ -104,12 +104,14 @@ class PositionController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($slug)
+    {        
+        $this->layout = '/dashb.php';
+        
+        $model = Position::findOne(['slug' => $slug]);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'slug' => $model->slug]);
         }
 
         return $this->render('update', [
@@ -124,9 +126,11 @@ class PositionController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($slug)
     {
-        $this->findModel($id)->delete();
+        $model = Position::findOne(['slug' => $slug]);
+        $model->delete();
+        Yii::$app->getSession()->setFlash('success', 'Position deleted successfully.');
 
         return $this->redirect(['index']);
     }

@@ -18,7 +18,8 @@ class m230404_132010_vote extends Migration
             'user_id' => $this->integer()->notNull(),
             'candidate_id' => $this->integer()->notNull(),
             'position_id' => $this->integer()->notNull(),
-            'created_at' => $this->dateTime()->notNull(),
+            'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
+            'updated_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
         ]);
 
         // add foreign key for vote user

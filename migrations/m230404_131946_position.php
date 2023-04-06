@@ -18,6 +18,8 @@ class m230404_131946_position extends Migration
             'name' => $this->string()->notNull(),
             'slug' => $this->string()->notNull()->unique(),
             'description' => $this->text()->notNull(),
+            'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
+            'updated_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
         ]);
     }
 
