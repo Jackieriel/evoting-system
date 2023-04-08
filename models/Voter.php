@@ -2,9 +2,6 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
-
 use Yii;
 
 /**
@@ -16,16 +13,14 @@ use Yii;
  * @property string $password
  * @property string|null $user_type
  * @property string $auth_key
- * @property string $token
+ * @property string $otp
  * @property string|null $created_at
  * @property string|null $updated_at
  *
  * @property Vote[] $votes
  */
-class User extends ActiveRecord implements IdentityInterface
+class Voter extends \yii\db\ActiveRecord
 {
-    public $rememberMe = true;
-
     /**
      * {@inheritdoc}
      */
@@ -69,7 +64,6 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-
     public static function findIdentity($id)
     {
         return static::findOne($id);
@@ -94,34 +88,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key === $auth_key;
     }
-
-
-
-    // Login 
-    public static function findByUserEmail($email)
-    {
-        return self::findOne([
-            "email" => $email,
-            // "user_type" => "user"
-        ]);
-    }
-
-    public function validatePassword($passwordHash)
-    {
-        return Yii::$app->getSecurity()->validatePassword($this->password, $passwordHash);
-    }
-
-    public function login()
-    {
-        $user = $this->findByUserEmail($this->email);
-        if ($user && $this->validatePassword($user->password)) {
-            return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            $this->addError('password', 'Incorrect username or password.');
-        }
-    }
-
-
 
     /**
      * Gets query for [[Votes]].

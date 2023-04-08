@@ -16,9 +16,11 @@ class m230404_131904_user extends Migration
         $this->createTable('user', [
             'id' => $this->primaryKey(),
             'username' => $this->string()->notNull()->unique(),
-            'email' => $this->string()->notNull(),
+            'first_name' => $this->string()->notNull(),
+            'last_name' => $this->string()->notNull(),
+            'email' => $this->string()->notNull()->unique(),
             'password' => $this->string()->notNull(),
-            'user_type' => $this->string(120)->defaultValue('user'),
+            'user_type' => $this->string(120)->defaultValue('voter'),
             'auth_key' => $this->string()->notNull(),
             'otp' => $this->string(6)->notNull(),
             'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),

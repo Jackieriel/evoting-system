@@ -30,8 +30,18 @@ ActiveForm::begin([
   "method" => "post"
 ]);
 ?>
+
 <div class="mb-3">
-  <label class="form-label">Name</label>
+  <label class="form-label">First Name</label>
+  <input type="text" name="first_name" placeholder="First Name" class="form-control" required>
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Last Name</label>
+  <input type="text" name="last_name" placeholder="Last Name" class="form-control" required>
+</div>
+<div class="mb-3">
+  <label class="form-label">Username</label>
   <input type="text" name="username" placeholder="username" class="form-control" required>
 </div>
 <div class="mb-3">

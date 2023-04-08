@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Position;
 use app\models\User;
+use app\models\Voter;
 
 class SiteController extends Controller
 {
@@ -143,6 +144,7 @@ class SiteController extends Controller
         $this->layout = '/dashb.php';
 
         $totalPositions = Position::find()->count();
+        $totalVoters = Voter::find()->where(['user_type' => 'voter'])->count();
 
         if (Yii::$app->user->isGuest) {
             // User is not logged in, redirect to login page
@@ -151,6 +153,7 @@ class SiteController extends Controller
             // User is logged in, show content
             return $this->render('dashboard', [
                 'totalPositions' => $totalPositions,
+                'totalVoters' => $totalVoters,
             ]);
         }
     }

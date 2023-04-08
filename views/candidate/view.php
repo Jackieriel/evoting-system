@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <div class="col-md-4">
-            <?php echo Html::img('@web/' . $model->photo, ['class' => 'img-thumbnail']) ?>            
+            <?php echo Html::img('@web/' . $model->photo, ['class' => 'img-thumbnail candidate-img']) ?>            
         </div>
     </div>
 
