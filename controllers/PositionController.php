@@ -125,8 +125,15 @@ class PositionController extends Controller
 
         $model = Position::findOne(['slug' => $slug]);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'slug' => $model->slug]);
+        if ($this->request->isPost){
+            if($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Candidate profile updated successfully.');
+                return $this->redirect(['view', 'slug' => $model->slug]);
+            }else{
+                Yii::$app->getSession()->setFlash('error', 'Update Failed.');            
+            }
+        }else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('update', [

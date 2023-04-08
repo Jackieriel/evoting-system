@@ -119,13 +119,31 @@ class CandidateController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($slug)
     {
-        $model = $this->findModel($id);
+        $this->layout = '/dashb.php';
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = Candidate::findOne(['slug' => $slug]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->imageFile !== null) {
+                if ($model->upload()) {
+                    // image uploaded successfully, update model's image attribute
+                    $model->save(false);
+                } else {
+                    // error uploading image
+                    Yii::$app->getSession()->setFlash('error', 'Failed to upload image.');
+                    return $this->refresh();
+                }
+            } else {
+                // no image uploaded, save model without updating image attribute
+                $model->save(false);
+            }
+            Yii::$app->getSession()->setFlash('success', 'Candidate updated successfully.');
+            return $this->redirect(['view', 'slug' => $model->slug]);
         }
+        
 
         return $this->render('update', [
             'model' => $model,
