@@ -86,7 +86,7 @@ Yii::getAlias('@web/favicon.ico')]); ?>
             <!-- Nav Item - Candidates Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/candidate/index']) ?>">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fas fa-fw fa-vote-yea"></i>
                     <span>Candidates</span>
                 </a>
             </li>

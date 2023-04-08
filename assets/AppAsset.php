@@ -51,6 +51,7 @@ class AppAsset extends AssetBundle
         
         // Datatable plugin custom
         'template/js/demo/datatables-demo.js',        
+        'template/js/my.js',        
 
 
     ];

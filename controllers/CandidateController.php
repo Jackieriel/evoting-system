@@ -2,53 +2,53 @@
 
 namespace app\controllers;
 
-use app\models\Position;
-use app\models\PositionSearch;
+use app\models\Candidate;
+use app\models\CandidateSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * PositionController implements the CRUD actions for Position model.
+ * CandidateController implements the CRUD actions for Candidate model.
  */
-class PositionController extends Controller
+class CandidateController extends Controller
 {
     /**
      * @inheritDoc
      */
     public function behaviors()
-{
-    return array_merge(
-        parent::behaviors(),
-        [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'], // Allow only logged-in users
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
                     ],
                 ],
-                'denyCallback' => function($rule, $action) {
-                    Yii::$app->session->setFlash('error', 'Please login to access this page.'); // Set flash message
-                    return $this->redirect(['site/login']); // Redirect to login page
-                },
-            ],
-        ]
-    );
-}
-
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'], // Allow only logged-in users
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        Yii::$app->session->setFlash('error', 'Please login to access this page.'); // Set flash message
+                        return $this->redirect(['site/login']); // Redirect to login page
+                    },
+                ],
+            ]
+        );
+    }
 
     /**
-     * Lists all Position models.
+     * Lists all Candidate models.
      *
      * @return string
      */
@@ -56,7 +56,7 @@ class PositionController extends Controller
     {
         $this->layout = '/dashb.php';
 
-        $searchModel = new PositionSearch();
+        $searchModel = new CandidateSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -66,7 +66,7 @@ class PositionController extends Controller
     }
 
     /**
-     * Displays a single Position model.
+     * Displays a single Candidate model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -75,7 +75,7 @@ class PositionController extends Controller
     {
         $this->layout = '/dashb.php';
         
-        $model = Position::findOne(['slug' => $slug]);
+        $model = Candidate::findOne(['slug' => $slug]);
 
         return $this->render('view', [
             'model' => $model,
@@ -83,7 +83,7 @@ class PositionController extends Controller
     }
 
     /**
-     * Creates a new Position model.
+     * Creates a new Candidate model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
@@ -91,42 +91,40 @@ class PositionController extends Controller
     {
         $this->layout = '/dashb.php';
 
-        $model = new Position();        
+        $model = new Candidate();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {                
-
-                if ($model->save()) {
-                    Yii::$app->getSession()->setFlash('success', 'Position added successfully.');
-                    return $this->redirect('index');
-                } else {
-                    Yii::$app->getSession()->setFlash('error', 'Adding Failed.');
-                }
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->upload() && $model->save(false)) {
+                Yii::$app->getSession()->setFlash('success', 'Candidate registered successfully.');
+                return $this->redirect('index');
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Adding Failed.');
             }
         } else {
             $model->loadDefaultValues();
         }
+
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
+
     /**
-     * Updates an existing Position model.
+     * Updates an existing Candidate model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($slug)
-    {        
-        $this->layout = '/dashb.php';
-
-        $model = Position::findOne(['slug' => $slug]);
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'slug' => $model->slug]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -135,7 +133,7 @@ class PositionController extends Controller
     }
 
     /**
-     * Deletes an existing Position model.
+     * Deletes an existing Candidate model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -143,23 +141,23 @@ class PositionController extends Controller
      */
     public function actionDelete($slug)
     {
-        $model = Position::findOne(['slug' => $slug]);
+        $model = Candidate::findOne(['slug' => $slug]);
         $model->delete();
-        Yii::$app->getSession()->setFlash('success', 'Position deleted successfully.');
+        Yii::$app->getSession()->setFlash('success', 'Candidate removed successfully.');
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Position model based on its primary key value.
+     * Finds the Candidate model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Position the loaded model
+     * @return Candidate the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Position::findOne(['id' => $id])) !== null) {
+        if (($model = Candidate::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

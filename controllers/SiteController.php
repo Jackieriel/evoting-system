@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Position;
 use app\models\User;
 
 class SiteController extends Controller
@@ -141,12 +142,16 @@ class SiteController extends Controller
     {
         $this->layout = '/dashb.php';
 
+        $totalPositions = Position::find()->count();
+
         if (Yii::$app->user->isGuest) {
             // User is not logged in, redirect to login page
             return $this->redirect(['index']);
         } else {
             // User is logged in, show content
-            return $this->render('dashboard');
+            return $this->render('dashboard', [
+                'totalPositions' => $totalPositions,
+            ]);
         }
     }
 
