@@ -74,7 +74,7 @@ class CandidateController extends Controller
     public function actionView($slug)
     {
         $this->layout = '/dashb.php';
-        
+
         $model = Candidate::findOne(['slug' => $slug]);
 
         return $this->render('view', [
@@ -143,7 +143,7 @@ class CandidateController extends Controller
             Yii::$app->getSession()->setFlash('success', 'Candidate updated successfully.');
             return $this->redirect(['view', 'slug' => $model->slug]);
         }
-        
+
 
         return $this->render('update', [
             'model' => $model,
@@ -157,14 +157,31 @@ class CandidateController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+    // public function actionDelete($slug)
+    // {
+    //     $model = Candidate::findOne(['slug' => $slug]);
+    //     $model->delete();
+    //     Yii::$app->getSession()->setFlash('success', 'Candidate removed successfully.');
+
+    //     return $this->redirect(['index']);
+    // }
+
     public function actionDelete($slug)
     {
         $model = Candidate::findOne(['slug' => $slug]);
+        if ($model->photo !== null) {
+            // delete candidate's photo if it exists
+            $photoPath = Yii::getAlias('@webroot/' . $model->photo);
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
         $model->delete();
         Yii::$app->getSession()->setFlash('success', 'Candidate removed successfully.');
 
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Candidate model based on its primary key value.
