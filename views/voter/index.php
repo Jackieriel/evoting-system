@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Email</th>                            
+                            <th>Email</th>
                             <th>Registered On</th>
                             <th class="text-right">Action</th>
                         </tr>
@@ -37,15 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
                         <?php foreach ($dataProvider->models as $model) : ?>
                             <tr>
-                                <td><?= $model->last_name .' '.$model->first_name ?></td>                                                               
-                                <td><?= $model->email ?></td>                                                               
+                                <td><?= $model->last_name . ' ' . $model->first_name ?></td>
+                                <td><?= $model->email ?></td>
                                 <td><?= Yii::$app->formatter->asDatetime($model->created_at, 'MMMM d, Y h:ia') ?></td>
                                 <td class="text-right"><?= Html::a('View', ['view', 'username' => $model->username], ['class' => 'btn btn-primary']) ?>
                                     <?= Html::a('Update', ['update', 'username' => $model->username], ['class' => 'btn btn-success']) ?>
                                     <?= Html::a('Delete', ['delete', 'username' => $model->username], [
                                         'class' => 'btn btn-danger',
                                         'data' => [
-                                            'confirm' => 'Are you sure you want to remove this candidate?',
+                                            'confirm' => 'Are you sure you want to remove this voter?',
                                             'method' => 'post',
                                         ],
                                     ]) ?></td>

@@ -52,18 +52,6 @@ class VoterController extends Controller
      *
      * @return string
      */
-    // public function actionIndex()
-    // {
-    //     $this->layout = '/dashb.php';
-
-    //     $searchModel = new VoterSearch();
-    //     $dataProvider = $searchModel->search($this->request->queryParams);
-
-    //     return $this->render('index', [
-    //         'searchModel' => $searchModel,
-    //         'dataProvider' => $dataProvider,
-    //     ]);
-    // }
 
     public function actionIndex()
     {
@@ -88,12 +76,14 @@ class VoterController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($username)
     {
         $this->layout = '/dashb.php';
 
+        $model = Voter::findOne(['username' => $username]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -135,14 +125,32 @@ class VoterController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($username)
     {
         $this->layout = '/dashb.php';
 
-        $model = $this->findModel($id);
+        $model = Voter::findOne(['username' => $username]);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        // if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'username' => $model->username]);
+        // }
+        // var_dump($model);
+        // return $this->render('update', [
+        //     'model' => $model,
+        // ]);
+
+        // from her
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Voter profile updated successfully.');
+                // return $this->redirect(['view', 'slug' => $model->slug]);
+                return $this->redirect(['view', 'username' => $model->username]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Update Failed.');
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -157,14 +165,23 @@ class VoterController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+
+    public function actionDelete($username)
     {
         $this->layout = '/dashb.php';
 
-        $this->findModel($id)->delete();
+        $model = Voter::findOne(['username' => $username]);
+
+        if ($model !== null) {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'The voter has been successfully removed.');
+        } else {
+            Yii::$app->session->setFlash('error', 'The voter could not be found.');
+        }
 
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Voter model based on its primary key value.
@@ -173,11 +190,11 @@ class VoterController extends Controller
      * @return Voter the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($username)
     {
         $this->layout = '/dashb.php';
 
-        if (($model = Voter::findOne(['id' => $id])) !== null) {
+        if (($model = Voter::findOne(['username' => $username])) !== null) {
             return $model;
         }
 
