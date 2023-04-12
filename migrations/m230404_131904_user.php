@@ -34,20 +34,5 @@ class m230404_131904_user extends Migration
     public function safeDown()
     {
         $this->dropTable('user');
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230404_131904_user cannot be reverted.\n";
-
-        return false;
-    }
-    */
+    }    
 }

@@ -99,6 +99,13 @@ Yii::getAlias('@web/favicon.ico')]); ?>
                 </a>
             </li>
 
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="<?= Yii::$app->urlManager->createUrl(['/vote/index']) ?>">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Vote</span>
+                </a>
+            </li>
             <!-- Nav Item - Voters Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#"">

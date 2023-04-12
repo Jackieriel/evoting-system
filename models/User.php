@@ -130,6 +130,6 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getVotes()
     {
-        return $this->hasMany(Vote::class, ['user_id' => 'id']);
+        return $this->hasMany(Vote::class, ['voter_id' => 'id']);
     }
 }

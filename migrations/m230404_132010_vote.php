@@ -15,7 +15,7 @@ class m230404_132010_vote extends Migration
         // create vote table
         $this->createTable('vote', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'voter_id' => $this->integer()->notNull(), //user_id
             'candidate_id' => $this->integer()->notNull(),
             'position_id' => $this->integer()->notNull(),
             'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
@@ -26,7 +26,7 @@ class m230404_132010_vote extends Migration
         $this->addForeignKey(
             'fk-vote-user_id',
             '{{%vote}}',
-            'user_id',
+            'voter_id',
             '{{%user}}',
             'id',
             'CASCADE'
@@ -60,19 +60,4 @@ class m230404_132010_vote extends Migration
     {
         $this->dropTable('vote');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230404_132010_vote cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
