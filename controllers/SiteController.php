@@ -9,6 +9,10 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+<<<<<<< HEAD
+use app\models\User;
+=======
+>>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
 
 class SiteController extends Controller
 {
@@ -64,6 +68,68 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+<<<<<<< HEAD
+    // Registter
+    public function actionRegister()
+    {
+        return $this->render('register');
+    }
+
+    public function actionSignUp()
+    {
+        $request = Yii::$app->request->post();
+
+        $user = new User();
+        $user->attributes = $request;
+        $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password); //Hash password before storing to DB
+        $user->auth_key = Yii::$app->security->generateRandomString(); //Generate auth key
+        $user->otp = Yii::$app->security->generateRandomString(6, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'); // add this line to generate a random six-digit token
+        $session = Yii::$app->session;
+
+        if ($user->validate() && $user->save()) {
+            $session->setFlash('successMessage', 'Registration successful');
+            return $this->redirect(['/login']);
+        }
+
+        $session->setFlash('errorMessages', $user->getErrors());
+        return $this->redirect(['/register']);
+    }
+
+
+    // Login
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(["/dashboard"]);
+        }
+
+        $request = Yii::$app->request->post();
+        $user = new User();
+        if ($request) {
+            if ($user->load($request) && $user->login()) {
+                return $this->redirect(["/dashboard"]);
+            }
+
+            $session = Yii::$app->session;
+            $session->setFlash('errorMessages', $user->getErrors());
+        }
+
+
+        $user->password = '';
+        return $this->render('login', [
+            'user' => $user,
+        ]);
+    }
+
+    // Dashboard
+    public function actionDashboard()
+    {
+        return $this->render('dashboard');
+    }
+
+
+
+=======
     /**
      * Login action.
      *
@@ -86,6 +152,7 @@ class SiteController extends Controller
         ]);
     }
 
+>>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     /**
      * Logout action.
      *
