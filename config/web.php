@@ -14,11 +14,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-<<<<<<< HEAD
             'cookieValidationKey' => 'L41M-OGvGqRKLoYUL4eutTQrgrxFomm4',
-=======
-            'cookieValidationKey' => 'uBcWOFdI3YdC0QF6m7tkuUKVetls7kWb',
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -45,26 +41,16 @@ $config = [
                 ],
             ],
         ],
-<<<<<<< HEAD
         'db' => $db,        
-=======
-        'db' => $db,
-        /*
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-<<<<<<< HEAD
                 '' => 'site/index',
                 '<action:\w+>' => 'site/<action>',
             ],
-        ],        
-=======
-            ],
         ],
-        */
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
+                
     ],
     'params' => $params,
 ];
@@ -75,22 +61,14 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-<<<<<<< HEAD
         'allowedIPs' => ['127.0.0.1', '::1'],
-=======
-        //'allowedIPs' => ['127.0.0.1', '::1'],
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-<<<<<<< HEAD
         'allowedIPs' => ['127.0.0.1', '::1'],
-=======
-        //'allowedIPs' => ['127.0.0.1', '::1'],
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     ];
 }
 
