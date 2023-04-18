@@ -9,10 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-<<<<<<< HEAD
+use app\models\Position;
 use app\models\User;
-=======
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
+use app\models\Voter;
 
 class SiteController extends Controller
 {
@@ -65,10 +64,28 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(["/dashboard"]);
+        }
+
+        $request = Yii::$app->request->post();
+        $user = new User();
+        if ($request) {
+            if ($user->load($request) && $user->login()) {
+                return $this->redirect(["/dashboard"]);
+            }
+
+            $session = Yii::$app->session;
+            $session->setFlash('errorMessages', $user->getErrors());
+        }
+
+
+        $user->password = '';
+        return $this->render('index', [
+            'user' => $user,
+        ]);
     }
 
-<<<<<<< HEAD
     // Registter
     public function actionRegister()
     {
@@ -124,35 +141,25 @@ class SiteController extends Controller
     // Dashboard
     public function actionDashboard()
     {
-        return $this->render('dashboard');
+        $this->layout = '/dashb.php';
+
+        $totalPositions = Position::find()->count();
+        $totalVoters = Voter::find()->where(['user_type' => 'voter'])->count();
+
+        if (Yii::$app->user->isGuest) {
+            // User is not logged in, redirect to login page
+            return $this->redirect(['index']);
+        } else {
+            // User is logged in, show content
+            return $this->render('dashboard', [
+                'totalPositions' => $totalPositions,
+                'totalVoters' => $totalVoters,
+            ]);
+        }
     }
 
 
 
-=======
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     /**
      * Logout action.
      *
