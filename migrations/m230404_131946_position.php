@@ -16,7 +16,10 @@ class m230404_131946_position extends Migration
         $this->createTable('position', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
+            'slug' => $this->string()->notNull()->unique(),
             'description' => $this->text()->notNull(),
+            'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
+            'updated_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
         ]);
     }
 
@@ -26,20 +29,5 @@ class m230404_131946_position extends Migration
     public function safeDown()
     {
         $this->dropTable('position');
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230404_131946_position cannot be reverted.\n";
-
-        return false;
-    }
-    */
+    } 
 }

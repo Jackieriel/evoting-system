@@ -16,8 +16,12 @@ class m230404_132001_candidate extends Migration
         $this->createTable('candidate', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
+            'slug' => $this->string()->notNull()->unique(),
             'photo' => $this->string()->notNull(),
+            'bio' => $this->text()->notNull(),
             'position_id' => $this->integer()->notNull(),
+            'created_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
+            'updated_at' => $this->dateTime()->defaultValue(Date('Y-m-d H:i:s')),
         ]);
 
         // add foreign key for candidate position
@@ -39,18 +43,4 @@ class m230404_132001_candidate extends Migration
         $this->dropTable('{{%candidate}}');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230404_132001_candidate cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
