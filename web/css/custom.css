@@ -1,12 +1,49 @@
-.table-image{
+.table-image {
   max-height: 55px;
 }
 
-.img-upload-preview{
+.img-upload-preview {
   max-height: 150px;
   margin-bottom: 5px;
 }
 
-.candidate-img{  
+.candidate-img {
   max-height: 300px;
 }
+
+/* Result display */
+.clist {
+  margin-left: 20px;
+}
+
+.icheckbox_flat-green,
+.iradio_flat-green {
+  display: inline-block;
+  display: inline;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  background: url(green.png) no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+.candidate-photo-vote{
+  height: 130px !important;
+  width: 120px !important;
+}
+
+/* .box-header {
+  color: #444;
+  display: block;
+  padding: 10px;
+  position: relative;
+}
+
+.box-header>.box-tools {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+} */

@@ -49,15 +49,15 @@ class VoteController extends Controller
     {
         // Check if at least one candidate is selected
         if (empty($_POST['candidate_id'])) {
-            Yii::$app->session->setFlash('error', 'You must select at least one candidate to vote.');
+            Yii::$app->session->setFlash('error', 'You must select at least one candidate to cast vote.');
             return $this->redirect(['vote/index']);
         }
-        
+
         // Get the currently logged in voter
         $voter = Yii::$app->user->identity;
 
         // Loop through each position and save the vote
-        foreach ($_POST['candidate_id'] as $position_id => $candidate_id) {          
+        foreach ($_POST['candidate_id'] as $position_id => $candidate_id) {
 
             // Check if the voter has already voted for this position
             $hasVoted = Vote::find()->where([
@@ -74,7 +74,7 @@ class VoteController extends Controller
                 $vote->save();
 
                 // Display a success message
-                Yii::$app->session->setFlash('success', 'Your vote has been recorded.');
+                Yii::$app->session->setFlash('success', 'Vote casted successfully!');
             } else {
                 // Display an error message
                 Yii::$app->session->setFlash('error', 'You have already voted for this position.');
