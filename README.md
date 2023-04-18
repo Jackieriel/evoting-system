@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
@@ -16,6 +17,13 @@ features to your application.
 [![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
 [![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
 [![build](https://github.com/yiisoft/yii2-app-basic/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-basic/actions?query=workflow%3Abuild)
+=======
+<p>
+    <h1 align="center">Simple e-Voting System implemented with Yii2</h1>
+</p>
+
+This is a simple evoting system build with yii2
+>>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
 
 DIRECTORY STRUCTURE
 -------------------

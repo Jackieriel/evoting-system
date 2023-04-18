@@ -9,7 +9,10 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+<<<<<<< HEAD
 use app\models\User;
+=======
+>>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
 
 class SiteController extends Controller
 {
@@ -65,6 +68,7 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+<<<<<<< HEAD
     // Registter
     public function actionRegister()
     {
@@ -125,6 +129,30 @@ class SiteController extends Controller
 
 
 
+=======
+    /**
+     * Login action.
+     *
+     * @return Response|string
+     */
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        $model->password = '';
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+>>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     /**
      * Logout action.
      *
