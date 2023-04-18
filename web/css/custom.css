@@ -1,3 +1,7 @@
+.no-underline{
+  text-decoration: none !important;
+}
+
 .table-image {
   max-height: 55px;
 }

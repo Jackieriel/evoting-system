@@ -84,4 +84,15 @@ class VoteController extends Controller
         // Redirect to the voting page
         return $this->redirect(['vote/index']);
     }
+
+    public function actionBio($slug)
+    {
+        $this->layout = '/dashb.php';
+
+        $model = Candidate::findOne(['slug' => $slug]);
+
+        return $this->render('bio', [
+            'model' => $model,
+        ]);
+    }
 }

@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Position;
 use app\models\User;
+use app\models\Vote;
 use app\models\Voter;
 
 class SiteController extends Controller
@@ -144,7 +145,16 @@ class SiteController extends Controller
         $this->layout = '/dashb.php';
 
         $totalPositions = Position::find()->count();
-        $totalVoters = Voter::find()->where(['user_type' => 'voter'])->count();
+
+        $totalVoters = Voter::find()
+            ->where(['user_type' => 'voter'])
+            ->count();
+
+        // Fetch all unique voter IDs from the Vote model
+        $uniqueVoterIDs = Vote::find()->select('voter_id')->distinct()->all();
+
+        // Count the total number of unique voter IDs
+        $totalVotersVoted = count($uniqueVoterIDs);
 
         if (Yii::$app->user->isGuest) {
             // User is not logged in, redirect to login page
@@ -154,9 +164,11 @@ class SiteController extends Controller
             return $this->render('dashboard', [
                 'totalPositions' => $totalPositions,
                 'totalVoters' => $totalVoters,
+                'totalVotersVoted' => $totalVotersVoted, // Pass the total voters who have voted to the view
             ]);
         }
     }
+
 
 
 
