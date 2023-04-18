@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-<<<<<<< HEAD
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -26,58 +25,24 @@ use Yii;
 class User extends ActiveRecord implements IdentityInterface
 {
     public $rememberMe = true;
-=======
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
-{
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
 
     /**
      * {@inheritdoc}
      */
-<<<<<<< HEAD
     public static function tableName()
     {
         return 'user';
-=======
-    public static function findIdentity($id)
-    {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     }
 
     /**
      * {@inheritdoc}
      */
-<<<<<<< HEAD
     public function rules()
     {
         return [
-            [['username', 'email', 'password', 'auth_key', 'otp'], 'required'],
+            [['username', 'first_name', 'last_name', 'email', 'password', 'auth_key', 'otp'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['username', 'email', 'password', 'auth_key'], 'string', 'max' => 255],
+            [['username', 'first_name', 'last_name', 'email', 'password', 'auth_key'], 'string', 'max' => 255],
             [['user_type'], 'string', 'max' => 120],
             [['otp'], 'string', 'max' => 6],
             [['username'], 'unique'],
@@ -91,6 +56,8 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return [
             'id' => 'ID',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
             'username' => 'Username',
             'email' => 'Email',
             'password' => 'Password',
@@ -113,45 +80,11 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         return static::findOne(['access_token' => $token]);
     }
 
-=======
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
     public function getId()
     {
         return $this->id;
     }
 
-<<<<<<< HEAD
     public function getAuthKey()
     {
         return $this->auth_key;
@@ -169,7 +102,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return self::findOne([
             "email" => $email,
-            "user_type" => "user"
+            // "user_type" => "user"
         ]);
     }
 
@@ -197,33 +130,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function getVotes()
     {
-        return $this->hasMany(Vote::class, ['user_id' => 'id']);
-=======
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
->>>>>>> 2d5f09252dc1b2bb636bdc12d5fff451ef31d941
+        return $this->hasMany(Vote::class, ['voter_id' => 'id']);
     }
 }
