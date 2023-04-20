@@ -24,10 +24,8 @@ $this->params['breadcrumbs'][] = $this->title; ?>
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <h3 class="card-title">
-                                        <h2>
-                                            <?= \yii\helpers\Html::encode($position->name) ?>
-                                        </h2>
+                                    <h3 class="card-title">                                        
+                                            <?= \yii\helpers\Html::encode($position->name) ?>                                        
                                     </h3>
                                 </div>
                                 <div class="col-md-2">

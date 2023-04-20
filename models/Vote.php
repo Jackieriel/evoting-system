@@ -20,6 +20,7 @@ use Yii;
  */
 class Vote extends \yii\db\ActiveRecord
 {
+    public $result;
     /**
      * {@inheritdoc}
      */
@@ -87,4 +88,17 @@ class Vote extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'voter_id']);
     }
+
+    // public static function getResults()
+    // {
+    //     // Fetch election results from data source
+    //     // Example: Fetch results from a database table
+    //     $results = self::find()
+    //         ->select(['position_id', 'SUM(votes) as total_votes'])
+    //         ->groupBy('position_id')
+    //         ->asArray()
+    //         ->all();
+
+    //     return $results;
+    // }
 }

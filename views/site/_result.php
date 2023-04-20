@@ -34,7 +34,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Total Registered Voters</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $totalVoters ?>
+                        <?= $totalVoters ?>
                         </div>
                     </div>
                     <div class="col-auto">
@@ -92,31 +92,3 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <!-- Container for election results -->
-        <div id="result-container"></div>
-
-    </div>
-</div>
-
-
-<script>
-// Fetch and update election results
-function updateResults() {
-    $.ajax({
-        url: '<?= Yii::$app->urlManager->createUrl(['controller/result']) ?>',
-        type: 'get',
-        success: function(data) {
-            // Update result container with fetched data
-            $('#result-container').html(data);
-        }
-    });
-}
-
-// Call the updateResults() function initially to fetch and display the results
-updateResults();
-
-// Update results every 5 seconds (or any desired interval)
-setInterval(updateResults, 5000);
-</script>
