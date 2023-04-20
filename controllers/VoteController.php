@@ -8,11 +8,14 @@ use app\models\User;
 use app\models\Candidate;
 use app\models\Position;
 use GuzzleHttp\Psr7\Request;
+use PhpParser\Builder\Function_;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
-
+use yii\data\ArrayDataProvider;
+use yii\db\Query;
+use yii\helpers\Json;
 
 class VoteController extends Controller
 {
@@ -83,5 +86,51 @@ class VoteController extends Controller
 
         // Redirect to the voting page
         return $this->redirect(['vote/index']);
+    }
+
+    public function actionBio($slug)
+    {
+        $this->layout = '/dashb.php';
+
+        $model = Candidate::findOne(['slug' => $slug]);
+
+        return $this->render('bio', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionResult()
+    {
+        $this->layout = '/dashb.php';
+
+        $positions = Position::find()->all();
+
+        $results = [];
+        foreach ($positions as $position) {
+            $votes = Vote::find()
+                ->select(['candidate_id', 'COUNT(*) as total_votes'])
+                ->where(['position_id' => $position->id])
+                ->groupBy('candidate_id')
+                ->orderBy(['total_votes' => SORT_DESC])
+                ->asArray()
+                ->all();
+
+            // Add candidates with no votes to the results array with 0 votes
+            $allCandidates = Candidate::find()->select(['id'])->where(['position_id' => $position->id])->asArray()->all();
+            $candidateIdsWithVotes = array_column($votes, 'candidate_id');
+            $candidatesWithoutVotes = array_diff(array_column($allCandidates, 'id'), $candidateIdsWithVotes);
+            foreach ($candidatesWithoutVotes as $candidateId) {
+                $votes[] = ['candidate_id' => $candidateId, 'total_votes' => 0];
+            }
+
+            $results[$position->id] = $votes;
+        }
+
+        // Display the election results
+        return $this->render('result', [
+            'results' => $results,
+            'positions' => $positions,
+        ]);
     }
 }

@@ -5,43 +5,48 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Vote';
-$this->params['breadcrumbs'][] = $this->title;
-?>
+$this->params['breadcrumbs'][] = $this->title; ?>
 
 <!-- New style -->
 <div class="row">
     <div class="col-10 offset-1" id="content">
         <div class="row">
-
-
             <?php $form = \yii\widgets\ActiveForm::begin([
-                'action' => ['vote'],
+                'action' =>
+                ['vote'],
             ]); ?>
             <?php foreach ($positions as $position) : ?>
-                <?php $candidates = \app\models\Candidate::find()->where(['position_id' => $position->id])->all(); ?>
+                <?php $candidates = \app\models\Candidate::find()->where(['position_id' =>
+                $position->id])->all(); ?>
 
                 <div class="col-12 mb-3">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <h3 class="card-title">
-
-                                        <h2><?= \yii\helpers\Html::encode($position->name) ?></h2>
+                                    <h3 class="card-title">                                        
+                                            <?= \yii\helpers\Html::encode($position->name) ?>                                        
                                     </h3>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="float-right">
-                                        <button type="button" class="btn btn-default btn-sm moveup" data-id="24" disabled=""><i class="fas fa-arrow-up"></i> </button>
-                                        <button type="button" class="btn btn-default btn-sm movedown" data-id="24"><i class="fas fa-arrow-down"></i></button>
+                                        <button type="button" class="btn btn-default btn-sm moveup" data-id="24" disabled="">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm movedown" data-id="24">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <p>Select your candidate
+                            <p>
+                                Select your candidate
                                 <span class="float-end">
-                                    <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="president"><i class="fas fa-sync-alt"></i> Reset</button>
+                                    <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="president">
+                                        <i class="fas fa-sync-alt"></i> Reset
+                                    </button>
                                 </span>
                             </p>
                             <div id="candidate_list">
@@ -49,11 +54,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <li class="mb-3">
                                         <?php foreach ($candidates as $candidate) : ?>
                                             <div class="form-check">
-
-                                                <?= \yii\helpers\Html::radio('candidate_id[' . $position->id . ']', false, ['value' => $candidate->id, 'uncheck' => null, 'class' => 'icheckbox_flat-green']) ?>
+                                                <?= \yii\helpers\Html::radio('candidate_id[' . $position->id
+                                                    . ']', false, [
+                                                    'value' => $candidate->id, 'uncheck' => null,
+                                                    'class' => 'icheckbox_flat-green'
+                                                ]) ?>
                                                 <label class="form-check-label">
-                                                    <?php echo Html::img('@web/' . $candidate->photo, ['class' => 'img-thumbnail candidate-photo-vote']) ?>
-                                                    <span class="cname"><?= \yii\helpers\Html::encode($candidate->name) ?></span>
+                                                    <?php echo Html::img('@web/' . $candidate->photo, ['class'
+                                                    => 'img-thumbnail candidate-photo-vote']) ?>
+                                                    <span class="cname">
+                                                        <?= Html::a(
+                                                            Html::encode($candidate->name) . ' ' . Html::tag('i', '', ['class' => 'fa fa-arrow-right']), // Concatenate the candidate name with the Font Awesome icon
+                                                            ['bio', 'slug' => $candidate->slug], // URL of the link target
+                                                            ['class' => 'no-underline'] // HTML options for the link
+                                                        ) ?>
+
+
+                                                    </span>
                                                 </label>
                                             </div>
                                         <?php endforeach; ?>
@@ -67,14 +84,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <?= \yii\helpers\Html::submitButton('Cast Vote', ['class' => 'btn btn-primary']) ?>
+                <?= \yii\helpers\Html::submitButton('Cast Vote', ['class' =>
+                'btn btn-primary']) ?>
             </div>
             <?php \yii\widgets\ActiveForm::end(); ?>
         </div>
     </div>
-
-
 </div>
-
 
 <!-- New style end-->
